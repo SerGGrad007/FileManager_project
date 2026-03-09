@@ -1,0 +1,8 @@
+//
+// Created by Пользователь on 09.03.2026.
+//
+
+#ifndef FILEMANAGER_PROJECT_PATHUTILS_H
+#define FILEMANAGER_PROJECT_PATHUTILS_H
+
+#endif //FILEMANAGER_PROJECT_PATHUTILS_H
