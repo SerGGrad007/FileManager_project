@@ -1,7 +1,3 @@
-//
-// Created by Пользователь on 09.03.2026.
-//
-
 #ifndef FILEMANAGER_PROJECT_FINDCOMMANDS_H
 #define FILEMANAGER_PROJECT_FINDCOMMANDS_H
 
