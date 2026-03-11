@@ -118,4 +118,33 @@ namespace tfm {
         FindPathCommand findPath;
         EXPECT_FALSE(findPath.execute(noArgs));
     }
+    TEST(CommandParserTest, EmptyInput) {
+        auto result = CommandParser::parse("");
+        EXPECT_FALSE(result.has_value());
+    }
+
+    TEST(CommandParserTest, SingleCommand) {
+        auto result = CommandParser::parse("pwd");
+        EXPECT_TRUE(result.has_value());
+        EXPECT_EQ(result->name, "pwd");
+        EXPECT_TRUE(result->args.empty());
+    }
+
+    TEST(CommandParserTest, CommandWithArg) {
+        auto result = CommandParser::parse("mkdir test");
+        EXPECT_TRUE(result.has_value());
+        EXPECT_EQ(result->name, "mkdir");
+        ASSERT_EQ(result->args.size(), 1);
+        EXPECT_EQ(result->args[0], "test");
+    }
+
+    TEST(CommandParserTest, MultipleArgs) {
+        auto result = CommandParser::parse("write file.txt hello world");
+        EXPECT_TRUE(result.has_value());
+        EXPECT_EQ(result->name, "write");
+        ASSERT_EQ(result->args.size(), 3);
+        EXPECT_EQ(result->args[0], "file.txt");
+        EXPECT_EQ(result->args[1], "hello");
+        EXPECT_EQ(result->args[2], "world");
+    }
 }
