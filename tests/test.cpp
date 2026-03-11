@@ -56,4 +56,22 @@ namespace tfm {
         EXPECT_FALSE(error.has_value());
         EXPECT_EQ(fs::current_path().filename().string(), testDir);
     }
+    TEST_F(FileSystemTest, PathUtils) {
+        fs::path relative = "test.txt";
+        fs::path absolute = PathUtils::makeAbsolute(relative);
+        EXPECT_TRUE(absolute.is_absolute());
+
+        EXPECT_EQ(PathUtils::getFilename(absolute), "test.txt");
+        EXPECT_TRUE(PathUtils::isEmpty(fs::path()));
+    }
+    TEST(FileSystemServiceStandalone, CurrentPath) {
+        auto path = FileSystemService::getCurrentPath();
+        EXPECT_FALSE(path.empty());
+    }
+    TEST(FileSystemServiceStandalone, ExistsAndIsDirectory) {
+        auto path = fs::current_path();
+        EXPECT_TRUE(FileSystemService::exists(path));
+        EXPECT_TRUE(FileSystemService::isDirectory(path));
+    }
+
 }
