@@ -27,6 +27,25 @@ namespace tfm {
         static std::optional<std::string> createDirectory(
             const std::filesystem::path& path
         );
+
+        static std::optional<std::string> createFile(
+            const std::filesystem::path& path
+        );
+
+        static std::optional<std::string> readFile(
+            const std::filesystem::path& path
+        );
+
+        static std::optional<std::string> writeFile(
+            const std::filesystem::path& path,
+            const std::string& content
+        );
+
+        static std::vector<std::filesystem::path> findByName(
+            const std::filesystem::path& root,
+            const std::string& pattern
+        );
+
     private:
         static std::filesystem::path makeAbsolute(
             const std::filesystem::path& path

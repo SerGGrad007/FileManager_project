@@ -1,5 +1,8 @@
 #include <FileSystemService.h>
 
+#include <sstream>
+#include <fstream>
+
 namespace tfm {
 
 namespace fs = std::filesystem;
@@ -92,6 +95,85 @@ namespace fs = std::filesystem;
             }
 
             fs::create_directories(target);
+            return std::nullopt;
+        } catch (const fs::filesystem_error& e) {
+            return e.what();
+        } catch (const std::exception& e) {
+            return e.what();
+        }
+    }
+
+    std::optional<std::string> FileSystemService::createFile(const fs::path& path) {
+        try {
+            if (path.empty()) {
+                return "Path is empty";
+            }
+
+            fs::path target = makeAbsolute(path);
+
+            if (target.has_parent_path()) {
+                fs::create_directories(target.parent_path());
+            }
+
+            std::ofstream file(target, std::ios::app);
+            if (!file.is_open()) {
+                return "Cannot create file";
+            }
+
+            return std::nullopt;
+        } catch (const fs::filesystem_error& e) {
+            return e.what();
+        } catch (const std::exception& e) {
+            return e.what();
+        }
+    }
+
+    std::optional<std::string> FileSystemService::readFile(const fs::path& path) {
+        try {
+            fs::path target = makeAbsolute(path);
+
+            if (!fs::exists(target)) {
+                return std::nullopt;
+            }
+
+            if (fs::is_directory(target)) {
+                return std::nullopt;
+            }
+
+            std::ifstream file(target);
+            if (!file.is_open()) {
+                return std::nullopt;
+            }
+
+            std::ostringstream buffer;
+            buffer << file.rdbuf();
+            return buffer.str();
+        } catch (...) {
+            return std::nullopt;
+        }
+    }
+
+    std::optional<std::string> FileSystemService::writeFile(
+        const fs::path& path,
+        const std::string& content
+    ) {
+        try {
+            if (path.empty()) {
+                return "Path is empty";
+            }
+
+            fs::path target = makeAbsolute(path);
+
+            if (target.has_parent_path()) {
+                fs::create_directories(target.parent_path());
+            }
+
+            std::ofstream file(target);
+            if (!file.is_open()) {
+                return "Cannot open file for writing";
+            }
+
+            file << content;
             return std::nullopt;
         } catch (const fs::filesystem_error& e) {
             return e.what();
