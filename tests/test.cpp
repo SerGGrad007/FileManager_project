@@ -73,5 +73,49 @@ namespace tfm {
         EXPECT_TRUE(FileSystemService::exists(path));
         EXPECT_TRUE(FileSystemService::isDirectory(path));
     }
+    TEST(CommandsTest, HelpCommand) {
+        HelpCommand help;
+        std::vector<std::string> emptyArgs;
+        EXPECT_TRUE(help.execute(emptyArgs));
+    }
 
+    TEST(CommandsTest, PwdCommand) {
+        PwdCommand pwd;
+        std::vector<std::string> emptyArgs;
+        EXPECT_TRUE(pwd.execute(emptyArgs));
+    }
+    TEST(CommandsTest, MkdirCommandWrongArgs) {
+        MkdirCommand mkdir;
+        std::vector<std::string> noArgs;
+        EXPECT_FALSE(mkdir.execute(noArgs));
+
+        std::vector<std::string> twoArgs = {"dir1", "dir2"};
+        EXPECT_FALSE(mkdir.execute(twoArgs));
+    }
+    TEST(CommandsTest, TouchCommandWrongArgs) {
+        TouchCommand touch;
+        std::vector<std::string> noArgs;
+        EXPECT_FALSE(touch.execute(noArgs));
+    }
+    TEST(CommandsTest, CatCommandWrongArgs) {
+        CatCommand cat;
+        std::vector<std::string> noArgs;
+        EXPECT_FALSE(cat.execute(noArgs));
+    }
+    TEST(CommandsTest, WriteCommandWrongArgs) {
+        WriteCommand write;
+        std::vector<std::string> noArgs;
+        EXPECT_FALSE(write.execute(noArgs));
+
+        std::vector<std::string> onlyFile = {"file.txt"};
+        EXPECT_FALSE(write.execute(onlyFile));
+    }
+    TEST(CommandsTest, FindCommandsWrongArgs) {
+        FindNameCommand findName;
+        std::vector<std::string> noArgs;
+        EXPECT_FALSE(findName.execute(noArgs));
+
+        FindPathCommand findPath;
+        EXPECT_FALSE(findPath.execute(noArgs));
+    }
 }
