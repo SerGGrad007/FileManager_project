@@ -3,7 +3,6 @@ add_library(FileSystem
         core/PathUtils.cpp
         core/CommandParser.cpp
         commands/BasicCommands.cpp
-        commands/Command.cpp
         commands/FileCommands.cpp
         commands/FindCommands.cpp)
 
