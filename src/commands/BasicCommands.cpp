@@ -116,5 +116,13 @@ bool CdCommand::execute(const std::vector<std::string>& args) {
 
     return true;
 }
+bool PwdCommand::execute(const std::vector<std::string>& args) {
+    if (!args.empty()) {
+        std::cerr << "Usage: " << getUsage() << '\n';
+        return false;
+    }
 
+    std::cout << FileSystemService::getCurrentPath() << '\n';
+    return true;
+}
 }

@@ -46,3 +46,42 @@ namespace tfm {
     }
 
 }
+
+int main() {
+    std::cout << "Terminal File Manager\n";
+    std::cout << "Type 'help' for available commands\n";
+
+    while (true) {
+        std::cout << "> ";
+
+        std::string input;
+        if (!std::getline(std::cin, input)) {
+            break;
+        }
+
+        if (input.empty()) {
+            continue;
+        }
+
+        auto parsed = tfm::CommandParser::parse(input);
+        if (!parsed.has_value()) {
+            std::cerr << "Invalid command\n";
+            continue;
+        }
+
+        if (parsed->name == "exit") {
+            std::cout << "Goodbye!\n";
+            break;
+        }
+
+        auto command = tfm::createCommand(parsed->name);
+        if (!command) {
+            std::cerr << "Unknown command: " << parsed->name << '\n';
+            continue;
+        }
+
+        command->execute(parsed->args);
+    }
+
+    return 0;
+}
