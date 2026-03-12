@@ -64,6 +64,41 @@ namespace tfm {
 
         return true;
     }
+    std::string FindPathCommand::getName() const {
+        return "find-path";
+    }
+
+    std::string FindPathCommand::getDescription() const {
+        return "Check full path and show info";
+    }
+
+    std::string FindPathCommand::getUsage() const {
+        return "find-path <path>";
+    }
+    std::vector<std::filesystem::path> FileSystemService::findByName(
+    const std::filesystem::path& root,
+    const std::string& pattern)
+    {
+        std::vector<std::filesystem::path> results;
+
+        try {
+            auto target = PathUtils::makeAbsolute(root);
+
+            if (!std::filesystem::exists(target) || !std::filesystem::is_directory(target)) {
+                return results;
+            }
+
+            for (const auto& entry : std::filesystem::recursive_directory_iterator(target)) {
+                if (entry.path().filename().string().find(pattern) != std::string::npos) {
+                    results.push_back(entry.path());
+                }
+            }
+        } catch (...) {
+            return results;
+        }
+
+        return results;
+    }
 
 
 }
