@@ -101,7 +101,16 @@ namespace tfm {
         std::cout << "File written successfully\n";
         return true;
     }
+    std::string WriteCommand::getName() const {
+        return "write";
+    }
 
+    std::string WriteCommand::getDescription() const {
+        return "Write text to a file";
+    }
 
+    std::string WriteCommand::getUsage() const {
+        return "write <file_name> <text>";
+    }
 
 }
