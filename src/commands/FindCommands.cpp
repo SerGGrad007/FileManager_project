@@ -28,4 +28,17 @@ namespace tfm {
 
         return true;
     }
+    std::string FindNameCommand::getName() const {
+        return "find-name";
+    }
+
+    std::string FindNameCommand::getDescription() const {
+        return "Find files by name";
+    }
+
+    std::string FindNameCommand::getUsage() const {
+        return "find-name <pattern>";
+    }
+
+
 }
