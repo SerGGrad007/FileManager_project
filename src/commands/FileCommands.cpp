@@ -76,7 +76,7 @@ namespace tfm {
         return "Print file contents";
     }
     std::string CatCommand::getUsage() const {
-        return "cat <file_name";
+        return "cat <file_name>";
     }
 
 
