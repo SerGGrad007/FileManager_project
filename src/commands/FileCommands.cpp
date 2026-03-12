@@ -69,5 +69,15 @@ namespace tfm {
         std::cout << content.value() << '\n';
         return true;
     }
+    std::string CatCommand::getName() const {
+        return "cat";
+    }
+    std::string CatCommand::getDescription() const {
+        return "Print file contents";
+    }
+    std::string CatCommand::getUsage() const {
+        return "cat <file_name";
+    }
+
 
 }
