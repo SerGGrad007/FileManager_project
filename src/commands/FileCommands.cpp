@@ -42,4 +42,15 @@ namespace tfm {
         std::cout << "File created successfully\n";
         return true;
     }
+    std::string TouchCommand::getName() const {
+        return "touch";
+    }
+
+    std::string TouchCommand::getDescription() const {
+        return "Create an empty file";
+    }
+
+    std::string TouchCommand::getUsage() const {
+        return "touch <file_name>";
+    }
 }
