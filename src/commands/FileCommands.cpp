@@ -78,6 +78,30 @@ namespace tfm {
     std::string CatCommand::getUsage() const {
         return "cat <file_name>";
     }
+    bool WriteCommand::execute(const std::vector<std::string>& args) {
+        if (args.size() < 2) {
+            std::cerr << "Usage: " << getUsage() << '\n';
+            return false;
+        }
+
+        std::string content;
+        for (std::size_t i = 1; i < args.size(); ++i) {
+            content += args[i];
+            if (i + 1 < args.size()) {
+                content += " ";
+            }
+        }
+
+        auto error = FileSystemService::writeFile(args[0], content);
+        if (error.has_value()) {
+            std::cerr << "Error: " << error.value() << '\n';
+            return false;
+        }
+
+        std::cout << "File written successfully\n";
+        return true;
+    }
+
 
 
 }
