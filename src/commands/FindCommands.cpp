@@ -40,5 +40,30 @@ namespace tfm {
         return "find-name <pattern>";
     }
 
+    bool FindPathCommand::execute(const std::vector<std::string>& args) {
+        if (args.size() != 1) {
+            std::cerr << "Usage: " << getUsage() << '\n';
+            return false;
+        }
+
+        std::filesystem::path target = PathUtils::makeAbsolute(args[0]);
+
+        if (!std::filesystem::exists(target)) {
+            std::cerr << "Path not found: " << target << '\n';
+            return false;
+        }
+
+        std::cout << "Found: " << target << '\n';
+
+        if (std::filesystem::is_directory(target)) {
+            std::cout << "Type: directory\n";
+        } else {
+            std::cout << "Type: file\n";
+            std::cout << "Size: " << std::filesystem::file_size(target) << " bytes\n";
+        }
+
+        return true;
+    }
+
 
 }
