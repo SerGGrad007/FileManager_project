@@ -19,4 +19,13 @@ namespace tfm {
         std::cout << "Directory created successfully\n";
         return true;
     }
+    std::string MkdirCommand::getName() const {
+        return "mkdir";
+    }
+    std::string MkdirCommand::getDescription() const {
+        return "Create a new directory";
+    }
+    std::string MkdirCommand::getUsage() const {
+        return "mkdir <directory_name>";
+    }
 }
