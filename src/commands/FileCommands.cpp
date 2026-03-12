@@ -53,4 +53,21 @@ namespace tfm {
     std::string TouchCommand::getUsage() const {
         return "touch <file_name>";
     }
+
+    bool CatCommand::execute(const std::vector<std::string>& args) {
+        if (args.size() != 1) {
+            std::cerr << "Usage: " << getUsage() << '\n';
+            return false;
+        }
+
+        auto content = FileSystemService::readFile(args[0]);
+        if (!content.has_value()) {
+            std::cerr << "Error: cannot read file\n";
+            return false;
+        }
+
+        std::cout << content.value() << '\n';
+        return true;
+    }
+
 }
